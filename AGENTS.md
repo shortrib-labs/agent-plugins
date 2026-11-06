@@ -55,3 +55,14 @@ tessl plugin new \
 ```
 
 Then add the plugin to `tessl.json` dependencies as a local file source and run validation.
+
+## Factory maintenance
+
+The recurring maintenance loop is the Tessl schedule in `tessl.json`, not a GitHub Actions cron.
+
+- Action: `plugin-collection-maintenance`
+- Environment: `factory`
+- Agent: `claude-code`
+- Schedule: weekly on Monday morning America/New_York
+
+The maintenance skill may open a focused PR, but it must not publish plugins. Publishing stays manual through `scripts/publish-plugins.sh` or the publish workflow.
