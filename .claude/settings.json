@@ -1,0 +1,52 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cd \"${CLAUDE_PROJECT_DIR}\" && tessl hook run --plugin-path=\"${CLAUDE_PROJECT_DIR}/.tessl/plugins/tessl/skill-guard\" --event=\"PreToolUse\" --agent=claude-code --schema-version=1"
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cd \"${CLAUDE_PROJECT_DIR}\" && tessl hook run --plugin-path=\"${CLAUDE_PROJECT_DIR}/.tessl/plugins/tessl/skill-guard\" --event=\"UserPromptSubmit\" --agent=claude-code --schema-version=1"
+          }
+        ]
+      }
+    ]
+  },
+  "tessl": {
+    "hooks": {
+      "tessl/skill-guard": [
+        {
+          "nativeEvent": "PreToolUse",
+          "hookEntry": {
+            "hooks": [
+              {
+                "type": "command",
+                "command": "cd \"${CLAUDE_PROJECT_DIR}\" && tessl hook run --plugin-path=\"${CLAUDE_PROJECT_DIR}/.tessl/plugins/tessl/skill-guard\" --event=\"PreToolUse\" --agent=claude-code --schema-version=1"
+              }
+            ]
+          }
+        },
+        {
+          "nativeEvent": "UserPromptSubmit",
+          "hookEntry": {
+            "hooks": [
+              {
+                "type": "command",
+                "command": "cd \"${CLAUDE_PROJECT_DIR}\" && tessl hook run --plugin-path=\"${CLAUDE_PROJECT_DIR}/.tessl/plugins/tessl/skill-guard\" --event=\"UserPromptSubmit\" --agent=claude-code --schema-version=1"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}
