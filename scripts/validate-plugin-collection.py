@@ -110,8 +110,9 @@ def main() -> int:
             problems.append(Problem(plugin_manifest_path, "private must stay true until publish visibility is intentionally changed"))
 
         skills = skill_files(plugin)
-        if not skills:
-            problems.append(Problem(plugin, "plugin must contain at least one skills/*/SKILL.md"))
+        rules = sorted((plugin / "rules").glob("*.md"))
+        if not skills and not rules:
+            problems.append(Problem(plugin, "plugin must contain at least one skills/*/SKILL.md or rules/*.md"))
 
         for skill in skills:
             text = skill.read_text()

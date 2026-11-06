@@ -1,0 +1,6 @@
+{
+  "name": "shortrib-labs/code-discipline",
+  "version": "0.1.0",
+  "description": "Testing, linting, and code comment conventions for Shortrib Labs and crdant application code repositories.",
+  "private": true
+}

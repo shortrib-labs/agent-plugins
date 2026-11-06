@@ -83,7 +83,10 @@ Records the repo's non-LLM tools for enforcing broad invariants that should appl
 
 ## Branch conventions
 
-- Feature branches: `<author>/<description>` or `factory/<description>` for automated work.
+- Branches are named `<type>/<user>/<purpose>`, enforced by the `shortrib-labs/repo-hygiene` hook.
+  - type: `build`, `chore`, `ci`, `content`, `docs`, `edit`, `feature`, `fix`, `performance`, `refactor`, `revert`, `spike`, `style`, or `test`
+  - user: the GitHub username of whoever does the work, `claude` for interactive agent work, or `factory` for automated factory runs
+  - purpose: a third-person verb phrase describing intent, e.g. `feature/claude/consolidates-repo-hygiene` or `chore/factory/updates-dependencies`
 - PR required before merging to default branch.
 
 ## CI/CD design
