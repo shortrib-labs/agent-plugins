@@ -1,6 +1,6 @@
 ---
 name: writing-pull-requests
-description: Use when opening a PR, drafting or rewriting a pull request (PR) title or description, or running `gh pr create`. Finds and fills the repository's PR template, falls back to the canonical TL;DR/Details template, and checks the title and body against the house style before submitting.
+description: Use when opening a PR, updating an existing pull request, drafting or rewriting a pull request (PR) title, description, or PR body, or running `gh pr create` or `gh pr edit`. Finds and fills the repository's PR template, falls back to the canonical TL;DR/Details template, and checks the title and body against the house style before submitting.
 ---
 
 # Writing pull requests
