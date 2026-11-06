@@ -56,6 +56,20 @@ tessl plugin new \
 
 Then add the plugin to `tessl.json` dependencies as a local file source and run validation.
 
+## Ticket-to-PR factory
+
+GitHub Issues with the `tessl` label are delegated to Tessl for implementation.
+
+- Action: `implement-ticket`
+- Skill: `tessl/factory#implement-github-issue`
+- Environment: `factory`
+- Agent: `claude-code`
+- Gate label: `tessl`
+
+A delegated issue should include a clear goal, context, acceptance criteria, and validation commands. The factory opens one PR for the issue. Human comments, reviews, and check results wake `shepherd-pull-request` to keep the PR moving.
+
+Remove the `tessl` label or close the issue to take work back from Tessl.
+
 ## Factory maintenance
 
 The recurring maintenance loop is the Tessl schedule in `tessl.json`, not a GitHub Actions cron.

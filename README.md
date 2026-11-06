@@ -8,7 +8,7 @@ A Tessl-managed repository for building, validating, improving, and publishing S
 - Plugin workspace: `shortrib-labs`
 - Plugin source directory: `plugins/`
 - Maintenance plugin: `plugins/plugin-collection-maintainer`
-- Tessl factory action and weekly schedule declared in `tessl.json`
+- Tessl issue-to-PR factory actions and weekly maintenance schedule declared in `tessl.json`
 - GitHub Actions CI/CD for validation, skill review, and manual publish
 
 ## Quick start
@@ -56,9 +56,25 @@ Required repository secrets:
 
 - `TESSL_TOKEN`
 
-## Tessl factory loop
+## Tessl issue-to-PR factory
 
-The factory loop is declared in `tessl.json`:
+GitHub Issues are the primary ticket queue for this repository.
+
+To delegate work to Tessl:
+
+1. Create a GitHub issue with a clear goal, context, acceptance criteria, and validation commands.
+2. Add the `tessl` label.
+3. Tessl runs `implement-ticket` with `tessl/factory#implement-github-issue` using `claude-code` in the `factory` environment.
+4. Tessl opens one PR for the issue.
+5. Review comments, PR comments, and check results wake `shepherd-pull-request` so Tessl can keep the PR moving.
+
+To take work back from Tessl, remove the `tessl` label or close the issue.
+
+The `.github/ISSUE_TEMPLATE/tessl-task.yml` template applies the `tessl` label and captures the information the factory needs.
+
+## Tessl maintenance loop
+
+The weekly maintenance loop is also declared in `tessl.json`:
 
 - **Action**: `plugin-collection-maintenance`
 - **Skill**: `file:plugins/plugin-collection-maintainer#plugin-collection-maintenance`
@@ -75,7 +91,7 @@ When reconciled by Tessl, the scheduled run should:
 5. Open or update one pull request.
 6. Leave publishing to the manual publish workflow.
 
-The `factory` Tessl environment must be bound to this project and granted GitHub pull-request access before the schedule can open PRs.
+The `factory` Tessl environment is bound to this project and has GitHub write access so it can manage issues and pull requests.
 
 ## Publishing
 

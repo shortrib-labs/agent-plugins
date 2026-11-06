@@ -4,6 +4,9 @@
   "dependencies": {
     "shortrib-labs/plugin-collection-maintainer": {
       "source": "file:plugins/plugin-collection-maintainer"
+    },
+    "tessl/factory": {
+      "version": "1.0.1"
     }
   },
   "agents": [
@@ -11,6 +14,55 @@
     "tessl-agent"
   ],
   "actions": {
+    "implement-ticket": {
+      "tags": [
+        "Ticket to PR"
+      ],
+      "skill": "tessl/factory#implement-github-issue",
+      "environment": "factory",
+      "agent": "claude-code",
+      "concurrency": {
+        "keys": [
+          {
+            "key": "implement:github-issue:{{ inputs.GITHUB_ISSUE_NUMBER }}",
+            "limit": 1
+          }
+        ]
+      }
+    },
+    "follow-ticket-changes": {
+      "tags": [
+        "Ticket to PR"
+      ],
+      "skill": "tessl/factory#follow-ticket-changes",
+      "environment": "factory",
+      "agent": "claude-code",
+      "concurrency": {
+        "keys": [
+          {
+            "key": "follow-ticket:github-issue:{{ inputs.GITHUB_ISSUE_NUMBER }}",
+            "limit": 1
+          }
+        ]
+      }
+    },
+    "shepherd-pull-request": {
+      "tags": [
+        "Ticket to PR"
+      ],
+      "skill": "tessl/factory#shepherd",
+      "environment": "factory",
+      "agent": "claude-code",
+      "concurrency": {
+        "keys": [
+          {
+            "key": "github:pr:{{ inputs.GITHUB_PR_NUMBER }}",
+            "limit": 1
+          }
+        ],
+        "debounce": "90s"
+      }
+    },
     "plugin-collection-maintenance": {
       "skill": "file:plugins/plugin-collection-maintainer#plugin-collection-maintenance",
       "environment": "factory",
@@ -23,6 +75,224 @@
       "cron": "0 9 * * 1",
       "timezone": "America/New_York",
       "description": "Weekly Tessl factory maintenance loop for the agent plugin collection"
+    }
+  },
+  "triggers": {
+    "implement-ticket-issue-labeled": {
+      "on": [
+        "github:issues.labeled"
+      ],
+      "when": {
+        "event.label.name": "tessl",
+        "event.issue.state": "open",
+        "event.sender.type": "User"
+      },
+      "action": {
+        "use": "implement-ticket",
+        "inputs": {
+          "GITHUB_ISSUE_LABEL": "tessl",
+          "GITHUB_ISSUE_NUMBER": "{{ event.issue.number }}"
+        }
+      }
+    },
+    "follow-ticket-issue-unlabeled": {
+      "on": [
+        "github:issues.unlabeled"
+      ],
+      "when": {
+        "event.label.name": "tessl",
+        "event.sender.type": "User"
+      },
+      "action": {
+        "use": "follow-ticket-changes",
+        "inputs": {
+          "TICKET_CHANGE": "taken-back",
+          "GITHUB_ISSUE_LABEL": "tessl",
+          "GITHUB_ISSUE_NUMBER": "{{ event.issue.number }}"
+        }
+      }
+    },
+    "follow-ticket-issue-closed": {
+      "on": [
+        "github:issues.closed"
+      ],
+      "when": {
+        "event.issue.labels.*.name": {
+          "any": {
+            "equals": "tessl"
+          }
+        },
+        "event.sender.type": "User"
+      },
+      "action": {
+        "use": "follow-ticket-changes",
+        "inputs": {
+          "TICKET_CHANGE": "issue-ended",
+          "GITHUB_ISSUE_LABEL": "tessl",
+          "GITHUB_ISSUE_NUMBER": "{{ event.issue.number }}"
+        }
+      }
+    },
+    "follow-ticket-issue-commented": {
+      "on": [
+        "github:issue_comment.created"
+      ],
+      "when": {
+        "isPullRequest": "false",
+        "event.issue.state": "open",
+        "event.sender.type": "User",
+        "event.issue.labels.*.name": {
+          "any": {
+            "equals": "tessl"
+          }
+        }
+      },
+      "action": {
+        "use": "follow-ticket-changes",
+        "inputs": {
+          "TICKET_CHANGE": "replied",
+          "GITHUB_ISSUE_LABEL": "tessl",
+          "GITHUB_ISSUE_NUMBER": "{{ event.issue.number }}"
+        }
+      }
+    },
+    "follow-ticket-pr-closed": {
+      "on": [
+        "github:pull_request.closed"
+      ],
+      "when": {
+        "event.pull_request.head.ref": {
+          "matches": "^tessl/"
+        },
+        "event.pull_request.labels.*.name": {
+          "any": {
+            "equals": "tessl"
+          }
+        },
+        "event.sender.type": "User"
+      },
+      "action": {
+        "use": "follow-ticket-changes",
+        "inputs": {
+          "TICKET_CHANGE": "pr-closed",
+          "GITHUB_ISSUE_LABEL": "tessl",
+          "GITHUB_PR_NUMBER": "{{ event.pull_request.number }}"
+        }
+      }
+    },
+    "shepherd-pr-review": {
+      "on": [
+        "github:pull_request_review.submitted"
+      ],
+      "when": {
+        "event.pull_request.state": "open",
+        "event.pull_request.head.ref": {
+          "matches": "^tessl/"
+        },
+        "event.pull_request.labels.*.name": {
+          "any": {
+            "equals": "tessl"
+          }
+        },
+        "event.sender.type": "User"
+      },
+      "action": {
+        "use": "shepherd-pull-request",
+        "inputs": {
+          "GITHUB_PR_NUMBER": "{{ event.pull_request.number }}"
+        }
+      }
+    },
+    "shepherd-pr-review-comment": {
+      "on": [
+        "github:pull_request_review_comment.created"
+      ],
+      "when": {
+        "event.pull_request.state": "open",
+        "event.pull_request.head.ref": {
+          "matches": "^tessl/"
+        },
+        "event.pull_request.labels.*.name": {
+          "any": {
+            "equals": "tessl"
+          }
+        },
+        "event.sender.type": "User"
+      },
+      "action": {
+        "use": "shepherd-pull-request",
+        "inputs": {
+          "GITHUB_PR_NUMBER": "{{ event.pull_request.number }}"
+        }
+      }
+    },
+    "shepherd-pr-conversation-comment": {
+      "on": [
+        "github:issue_comment.created"
+      ],
+      "when": {
+        "isPullRequest": "true",
+        "event.issue.state": "open",
+        "event.sender.type": "User",
+        "event.issue.labels.*.name": {
+          "any": {
+            "equals": "tessl"
+          }
+        }
+      },
+      "action": {
+        "use": "shepherd-pull-request",
+        "inputs": {
+          "GITHUB_PR_NUMBER": "{{ event.issue.number }}"
+        }
+      }
+    },
+    "shepherd-pr-check-run-failed": {
+      "on": [
+        "github:check_run.completed"
+      ],
+      "when": {
+        "event.check_run.pull_requests.0.number": {
+          "exists": true
+        },
+        "event.check_run.check_suite.head_branch": {
+          "matches": "^tessl/"
+        },
+        "event.check_run.conclusion": {
+          "in": [
+            "failure",
+            "timed_out",
+            "startup_failure",
+            "action_required"
+          ]
+        }
+      },
+      "action": {
+        "use": "shepherd-pull-request",
+        "inputs": {
+          "GITHUB_PR_NUMBER": "{{ event.check_run.pull_requests.0.number }}"
+        }
+      }
+    },
+    "shepherd-pr-check-suite-passed": {
+      "on": [
+        "github:check_suite.completed"
+      ],
+      "when": {
+        "event.check_suite.pull_requests.0.number": {
+          "exists": true
+        },
+        "event.check_suite.head_branch": {
+          "matches": "^tessl/"
+        },
+        "event.check_suite.conclusion": "success"
+      },
+      "action": {
+        "use": "shepherd-pull-request",
+        "inputs": {
+          "GITHUB_PR_NUMBER": "{{ event.check_suite.pull_requests.0.number }}"
+        }
+      }
     }
   }
 }
