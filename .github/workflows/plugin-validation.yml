@@ -1,0 +1,45 @@
+name: Plugin collection validation
+
+on:
+  pull_request:
+    paths:
+      - 'plugins/**'
+      - 'scripts/**'
+      - 'tessl.json'
+      - '.github/workflows/plugin-validation.yml'
+      - 'AGENTS.md'
+      - 'README.md'
+  push:
+    branches: [main]
+    paths:
+      - 'plugins/**'
+      - 'scripts/**'
+      - 'tessl.json'
+      - '.github/workflows/plugin-validation.yml'
+      - 'AGENTS.md'
+      - 'README.md'
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install Tessl CLI
+        uses: tesslio/setup-tessl@v2
+        with:
+          token: ${{ secrets.TESSL_TOKEN }}
+
+      - name: Validate plugin collection
+        run: |
+          base_ref=""
+          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
+            git fetch origin "${{ github.base_ref }}" --depth=1
+            base_ref="origin/${{ github.base_ref }}"
+          fi
+          scripts/validate-plugins.sh "$base_ref"

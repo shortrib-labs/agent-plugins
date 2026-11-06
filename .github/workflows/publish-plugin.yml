@@ -1,0 +1,45 @@
+name: Publish plugin
+
+on:
+  workflow_dispatch:
+    inputs:
+      plugin:
+        description: 'Plugin path, for example plugins/plugin-collection-maintainer, or all'
+        required: true
+        default: 'plugins/plugin-collection-maintainer'
+      bump:
+        description: 'Version bump if version already exists'
+        required: true
+        default: 'patch'
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
+          - none
+      dry_run:
+        description: 'Run pre-publish checks without publishing'
+        required: true
+        default: true
+        type: boolean
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install Tessl CLI
+        uses: tesslio/setup-tessl@v2
+        with:
+          token: ${{ secrets.TESSL_TOKEN }}
+
+      - name: Publish plugin
+        env:
+          DRY_RUN: ${{ inputs.dry_run }}
+        run: |
+          scripts/publish-plugins.sh "${{ inputs.plugin }}" "${{ inputs.bump }}"

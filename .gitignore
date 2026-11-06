@@ -1,0 +1,20 @@
+# OS/editor
+.DS_Store
+.idea/
+.vscode/
+
+# Logs and local env
+*.log
+.env
+.env.*
+!.env.example
+
+# Tessl/local artifacts
+.tessl/plugins/
+.tessl/cache/
+.tessl/tmp/
+*.tgz
+
+# Python
+__pycache__/
+.pytest_cache/

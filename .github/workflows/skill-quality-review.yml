@@ -1,0 +1,46 @@
+name: Skill quality review
+
+on:
+  pull_request:
+    paths:
+      - 'plugins/**/SKILL.md'
+      - 'plugins/**/references/**'
+      - '.github/workflows/skill-quality-review.yml'
+  workflow_dispatch:
+    inputs:
+      threshold:
+        description: 'Quality review threshold percentage'
+        required: false
+        default: '75'
+      security_threshold:
+        description: 'Security review threshold percentage, or skip'
+        required: false
+        default: '0'
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install Tessl CLI
+        uses: tesslio/setup-tessl@v2
+        with:
+          token: ${{ secrets.TESSL_TOKEN }}
+
+      - name: Review changed skills
+        env:
+          SKILL_REVIEW_THRESHOLD: ${{ inputs.threshold || '75' }}
+          SKILL_SECURITY_REVIEW_THRESHOLD: ${{ inputs.security_threshold || '0' }}
+        run: |
+          base_ref=""
+          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
+            git fetch origin "${{ github.base_ref }}" --depth=1
+            base_ref="origin/${{ github.base_ref }}"
+          fi
+          scripts/review-changed-skills.sh "$base_ref"

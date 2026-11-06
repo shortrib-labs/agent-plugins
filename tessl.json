@@ -1,0 +1,20 @@
+{
+  "name": "shortrib-labs/agent-plugins",
+  "mode": "vendored",
+  "dependencies": {
+    "shortrib-labs/plugin-collection-maintainer": {
+      "source": "file:plugins/plugin-collection-maintainer"
+    }
+  },
+  "agents": [
+    "claude-code",
+    "tessl-agent"
+  ],
+  "actions": {
+    "plugin-collection-maintenance": {
+      "skill": "file:plugins/plugin-collection-maintainer#plugin-collection-maintenance",
+      "environment": "factory",
+      "agent": "claude-code"
+    }
+  }
+}
