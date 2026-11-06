@@ -12,10 +12,10 @@ on:
         description: 'Quality review threshold percentage'
         required: false
         default: '75'
-      security_threshold:
-        description: 'Security review threshold percentage, or skip'
+      security_fail_on:
+        description: 'Fail the security review at this severity or above (low, medium, high, critical), or skip'
         required: false
-        default: '0'
+        default: 'high'
 
 jobs:
   review:
@@ -36,7 +36,7 @@ jobs:
       - name: Review changed skills
         env:
           SKILL_REVIEW_THRESHOLD: ${{ inputs.threshold || '75' }}
-          SKILL_SECURITY_REVIEW_THRESHOLD: ${{ inputs.security_threshold || '0' }}
+          SKILL_SECURITY_FAIL_ON: ${{ inputs.security_fail_on || 'high' }}
         run: |
           base_ref=""
           if [[ "${{ github.event_name }}" == "pull_request" ]]; then
