@@ -23,6 +23,12 @@ for plugin in "${plugins[@]}"; do
   tessl plugin lint "$plugin"
   echo "::endgroup::"
 
+  if [[ -d "$plugin/tests" ]] && find "$plugin/tests" -name 'test_*.py' -print -quit | grep -q .; then
+    echo "::group::python unit tests $plugin"
+    python3 -m unittest discover -s "$plugin/tests"
+    echo "::endgroup::"
+  fi
+
   if [[ -d "$plugin/evals" ]] && find "$plugin/evals" -name task.md -print -quit | grep -q .; then
     echo "::group::tessl eval lint $plugin"
     tessl eval lint "$plugin"

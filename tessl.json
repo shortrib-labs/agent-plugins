@@ -7,6 +7,12 @@
     },
     "tessl/factory": {
       "version": "1.0.1"
+    },
+    "shortrib-labs/repo-hygiene": {
+      "source": "file:plugins/repo-hygiene"
+    },
+    "shortrib-labs/code-discipline": {
+      "source": "file:plugins/code-discipline"
     }
   },
   "agents": [

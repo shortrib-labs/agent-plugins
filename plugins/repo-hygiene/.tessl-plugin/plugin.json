@@ -1,0 +1,22 @@
+{
+  "name": "shortrib-labs/repo-hygiene",
+  "version": "0.1.0",
+  "description": "Git, pull request, and working conventions shared by every Shortrib Labs and crdant repository, with a hook that enforces the git rules.",
+  "private": true,
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash|exec_command|run_shell_command|shell",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3",
+            "args": [
+              "${TESSL_PLUGIN_DIR}/hooks/guard_git.py"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
