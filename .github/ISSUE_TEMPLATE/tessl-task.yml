@@ -1,0 +1,45 @@
+name: Tessl task
+description: Delegate repository work to Tessl as the ticket-to-PR factory.
+title: ""
+labels:
+  - tessl
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this template for work you want Tessl to implement. The `tessl` label delegates the issue to the factory.
+  - type: textarea
+    id: goal
+    attributes:
+      label: Goal
+      description: Describe the outcome Tessl should deliver.
+      placeholder: What should be true when this issue is complete?
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Context
+      description: Include relevant files, links, constraints, or prior decisions.
+      placeholder: What should Tessl know before making changes?
+    validations:
+      required: false
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      description: List the checks or behavior that prove the PR is ready.
+      placeholder: |
+        - [ ] ...
+        - [ ] ...
+    validations:
+      required: true
+  - type: textarea
+    id: validation
+    attributes:
+      label: Validation
+      description: Name expected commands or manual checks.
+      value: |
+        - `scripts/validate-plugins.sh`
+    validations:
+      required: false
