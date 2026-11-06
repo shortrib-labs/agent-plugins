@@ -16,5 +16,13 @@
       "environment": "factory",
       "agent": "claude-code"
     }
+  },
+  "schedules": {
+    "plugin-collection-maintenance-weekly": {
+      "action": "plugin-collection-maintenance",
+      "cron": "0 9 * * 1",
+      "timezone": "America/New_York",
+      "description": "Weekly Tessl factory maintenance loop for the agent plugin collection"
+    }
   }
 }
