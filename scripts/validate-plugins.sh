@@ -3,9 +3,18 @@ set -euo pipefail
 
 base_ref="${1:-}"
 
-python3 scripts/validate-plugin-collection.py
-
 tessl schedule validate
+
+verify_args=(--all)
+if [[ -n "$base_ref" ]]; then
+  verify_args=(--base "$base_ref")
+fi
+if [[ -n "${GITHUB_ACTIONS:-}" ]]; then
+  verify_args+=(--github)
+fi
+echo "::group::tessl change verify ${verify_args[*]}"
+tessl change verify "${verify_args[@]}"
+echo "::endgroup::"
 
 mapfile -t plugins < <(scripts/changed-plugins.sh "$base_ref")
 if [[ ${#plugins[@]} -eq 0 ]]; then

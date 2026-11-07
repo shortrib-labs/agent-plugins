@@ -1,0 +1,14 @@
+{
+  "name": "Root tessl.json targets Claude Code and the Tessl agent",
+  "instruction": "The repository's tessl.json lists both claude-code and tessl-agent in agents.",
+  "relevant_when": "The file is the repository-root tessl.json manifest.",
+  "context": "The plugin collection is used interactively from Claude Code and by the Tessl factory, so installs must generate context for both agents.",
+  "scope": "file",
+  "scope_reason": "tessl.json alone holds the agents field.",
+  "checklist": [
+    {
+      "name": "required-agents",
+      "rule": "The top-level \"agents\" array contains both the string \"claude-code\" and the string \"tessl-agent\"."
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "name": "Plugin evals folders contain scenarios",
+  "instruction": "Every plugins/<plugin>/evals/ folder contains at least one scenario folder with a task.md file.",
+  "relevant_when": "The supplied paths include at least one file under a plugins/<plugin>/evals/ folder.",
+  "context": "An evals folder without task.md scenarios passes tessl eval lint as \"0 scenarios valid\" and silently gives the plugin no eval coverage.",
+  "scope": "paths",
+  "scope_reason": "Whether each evals folder holds a task.md is visible from the file paths alone.",
+  "checklist": [
+    {
+      "name": "each-evals-folder-has-task",
+      "rule": "For every distinct plugins/<plugin>/evals/ prefix among the supplied paths, at least one path matches plugins/<plugin>/evals/<scenario>/task.md. Not applicable when no supplied path is under an evals folder."
+    }
+  ]
+}

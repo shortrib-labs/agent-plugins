@@ -49,24 +49,25 @@ Records the repo's non-LLM tools for enforcing broad invariants that should appl
 - **Lint / format tools**: `tessl plugin lint` for plugin manifests and file structure; `tessl eval lint` for eval scenario structure.
 - **Structural search tools**: none.
 - **Typecheck tools**: none.
-- **Schema/config validators**: `tessl schedule validate`; `scripts/validate-plugin-collection.py` for repository-specific plugin collection policy.
+- **Schema/config validators**: `tessl schedule validate`.
 - **Import-boundary or architecture checks**: none.
 - **Generated-artifact sync checks**: none.
 - **Contract/golden checks with broad invariant value**: none.
 - **Broad invariant test suites**: none.
 - **Primary CI workflows that run these checks**: `.github/workflows/plugin-validation.yml`.
-- **Preferred destination for new deterministic checks**: extend `scripts/validate-plugin-collection.py` for plugin collection policy; prefer standard Tessl lint commands where available.
+- **Preferred destination for new deterministic checks**: Tessl tooling only (`tessl plugin lint`, `tessl eval lint`, `tessl review run`, `tessl schedule validate`, tessl-verify verifiers). Do not add hand-written validators for plugins or skills; raise gaps as verifiers or upstream requests.
+- **Unit tests for plugin code**: `scripts/validate-plugins.sh` runs a plugin's `tests/test_*.py` (for example the repo-hygiene hook). These test code, not plugin structure.
 - **Missing deterministic guardrail gaps**: actionlint is not configured for GitHub workflow YAML; markdown lint is not configured for docs/skills.
 - **Recommended first tool to add**: actionlint for GitHub workflow validation after the first CI iteration.
 
 ## Tessl verify
 
-- **Configured**: no.
-- **Manifest**: `tessl.json`.
-- **Verifier files**: none.
+- **Configured**: yes.
+- **Manifest**: `tessl.json`, group `plugin-collection` at level `error`.
+- **Verifier files**: `verifiers/tessl-manifest-agents.json` (agents include `claude-code` and `tessl-agent`), `verifiers/plugin-evals-have-scenarios.json` (every `plugins/*/evals/` folder has a `task.md` scenario).
 - **Monorepo child manifests**: none.
-- **CI gate**: none.
-- **TESSL_TOKEN for verify**: required secret listed above, but verify is not set up yet.
+- **CI gate**: `scripts/validate-plugins.sh` runs `tessl change verify` (`--base` on PRs, `--all` otherwise, `--github` in Actions) in `.github/workflows/plugin-validation.yml`.
+- **Known limit**: `tessl change verify` skips dot-directories, so it cannot see `plugins/*/.tessl-plugin/plugin.json`.
 
 ## Tessl factory schedule
 
@@ -91,7 +92,7 @@ Records the repo's non-LLM tools for enforcing broad invariants that should appl
 
 ## CI/CD design
 
-- PR plugin validation is deterministic and should be required once it has passed on the initial setup PR.
+- PR plugin validation runs only Tessl tooling (`tessl plugin lint`, `tessl eval lint`, `tessl schedule validate`, `tessl change verify`) plus plugin unit tests, and should be required once it has passed on the initial setup PR.
 - Skill quality/security review is advisory at first and can become required after threshold tuning.
 - Recurring plugin maintenance is a Tessl schedule in `tessl.json`, not a GitHub Actions cron.
 - Publishing is a manual GitHub Actions workflow with dry-run support.
