@@ -32,6 +32,10 @@ BRANCH_PATTERN = re.compile(
     os.environ.get("REPO_HYGIENE_BRANCH_PATTERN")
     or rf"^({BRANCH_TYPES})/[^/\s]+/[^\s]+$"
 )
+# Temporary exception: the Tessl factory names its branches `tessl/<id>`, where
+# <id> is `issue-<n>` for GitHub issues or a lowercased Linear identifier such
+# as `eng-123`. Drop this once the factory takes a branch name as input.
+FACTORY_BRANCH_PATTERN = re.compile(r"^tessl/[a-z][a-z0-9]*-[0-9]+$")
 
 SEPARATORS = {";", "&&", "||", "|", "&", "\n", "(", ")", "|&", ";;"}
 COMMAND_PREFIXES = {"env", "command", "exec", "time", "nohup", "sudo"}
@@ -191,7 +195,7 @@ def created_branch(sub: str, args: list[str]) -> str | None:
 
 def check_branch(sub: str, args: list[str]) -> str | None:
     name = created_branch(sub, args)
-    if name and not BRANCH_PATTERN.match(name):
+    if name and not (BRANCH_PATTERN.match(name) or FACTORY_BRANCH_PATTERN.match(name)):
         return (
             f"Branch `{name}` doesn't match `<type>/<user>/<purpose>`. Type is one of "
             f"{BRANCH_TYPES.replace('|', ', ')} (spelled out in full); user is who is "

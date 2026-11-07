@@ -1,6 +1,6 @@
 {
   "name": "shortrib-labs/repo-hygiene",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Git, pull request, and working conventions shared by every Shortrib Labs and crdant repository, with a hook that enforces the git rules.",
   "private": true,
   "hooks": {

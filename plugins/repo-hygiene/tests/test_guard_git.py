@@ -107,6 +107,26 @@ class BranchNaming(unittest.TestCase):
             with self.subTest(cmd=cmd):
                 self.assertIsNone(violation(cmd))
 
+    def test_allows_tessl_factory_branches(self):
+        for cmd in [
+            "git checkout -b tessl/issue-5",
+            "git switch -c tessl/eng-123",
+            "git worktree add -b tessl/issue-42 .worktrees/issue-42 origin/main",
+        ]:
+            with self.subTest(cmd=cmd):
+                self.assertIsNone(violation(cmd))
+
+    def test_blocks_other_tessl_branches(self):
+        for cmd in [
+            "git checkout -b tessl/foo/bar",
+            "git checkout -b tessl/",
+            "git checkout -b tessl",
+            "git checkout -b tessl/5",
+            "git checkout -b tessl/issue-5/extra",
+        ]:
+            with self.subTest(cmd=cmd):
+                self.assertIsNotNone(violation(cmd))
+
     def test_ignores_non_creating_branch_commands(self):
         for cmd in [
             "git branch",
