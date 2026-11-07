@@ -87,6 +87,7 @@ Records the repo's non-LLM tools for enforcing broad invariants that should appl
   - type: `build`, `chore`, `ci`, `content`, `docs`, `edit`, `feature`, `fix`, `performance`, `refactor`, `revert`, `spike`, `style`, or `test`
   - user: the GitHub username of whoever does the work, `claude` for interactive agent work, or `factory` for automated factory runs
   - purpose: a third-person verb phrase describing intent, e.g. `feature/claude/consolidates-repo-hygiene` or `chore/factory/updates-dependencies`
+- Tessl factory runs use `tessl/<id>` branches (`tessl/issue-42`, `tessl/eng-123`) as a temporary exception the hook allows until the factory accepts a branch name.
 - PR required before merging to default branch.
 
 ## CI/CD design

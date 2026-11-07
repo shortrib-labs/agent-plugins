@@ -7,6 +7,7 @@
   - type, spelled out in full: `build`, `chore`, `ci`, `content`, `docs`, `edit`, `feature`, `fix`, `performance`, `refactor`, `revert`, `spike`, `style`, `test`
   - user: who is doing the work; `claude` for agent-authored branches
   - purpose: a third-person verb phrase describing intent, not implementation (`feature/crdant/writes-hpd-files`, not `feature/crdant/adds-hpd-writer`)
+- Tessl factory runs use `tessl/<id>` branches (for example `tessl/issue-42`), a temporary exception the hook allows until the factory accepts a branch name.
 - Put worktrees under `.worktrees/`, named after the last fragment of the branch (`.worktrees/writes-hpd-files`), and make sure `.worktrees/` is ignored.
 - Land changes on the default branch through a pull request, even small ones.
 - Before pushing, check `git log origin/<branch>..HEAD` so you know every commit a push will send.
