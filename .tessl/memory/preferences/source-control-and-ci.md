@@ -49,13 +49,14 @@ Records the repo's non-LLM tools for enforcing broad invariants that should appl
 - **Lint / format tools**: `tessl plugin lint` for plugin manifests and file structure; `tessl eval lint` for eval scenario structure.
 - **Structural search tools**: none.
 - **Typecheck tools**: none.
-- **Schema/config validators**: `tessl schedule validate`; `scripts/validate-plugin-collection.py` for repository-specific plugin collection policy.
+- **Schema/config validators**: `tessl schedule validate`.
 - **Import-boundary or architecture checks**: none.
 - **Generated-artifact sync checks**: none.
 - **Contract/golden checks with broad invariant value**: none.
 - **Broad invariant test suites**: none.
 - **Primary CI workflows that run these checks**: `.github/workflows/plugin-validation.yml`.
-- **Preferred destination for new deterministic checks**: extend `scripts/validate-plugin-collection.py` for plugin collection policy; prefer standard Tessl lint commands where available.
+- **Preferred destination for new deterministic checks**: Tessl tooling only (`tessl plugin lint`, `tessl eval lint`, `tessl review run`, `tessl schedule validate`, tessl-verify verifiers). Do not add hand-written validators for plugins or skills; raise gaps as verifiers or upstream requests.
+- **Unit tests for plugin code**: `scripts/validate-plugins.sh` runs a plugin's `tests/test_*.py` (for example the repo-hygiene hook). These test code, not plugin structure.
 - **Missing deterministic guardrail gaps**: actionlint is not configured for GitHub workflow YAML; markdown lint is not configured for docs/skills.
 - **Recommended first tool to add**: actionlint for GitHub workflow validation after the first CI iteration.
 

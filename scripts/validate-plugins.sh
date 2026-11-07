@@ -3,8 +3,6 @@ set -euo pipefail
 
 base_ref="${1:-}"
 
-python3 scripts/validate-plugin-collection.py
-
 tessl schedule validate
 
 mapfile -t plugins < <(scripts/changed-plugins.sh "$base_ref")
