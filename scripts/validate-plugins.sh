@@ -5,6 +5,17 @@ base_ref="${1:-}"
 
 tessl schedule validate
 
+verify_args=(--all)
+if [[ -n "$base_ref" ]]; then
+  verify_args=(--base "$base_ref")
+fi
+if [[ -n "${GITHUB_ACTIONS:-}" ]]; then
+  verify_args+=(--github)
+fi
+echo "::group::tessl change verify ${verify_args[*]}"
+tessl change verify "${verify_args[@]}"
+echo "::endgroup::"
+
 mapfile -t plugins < <(scripts/changed-plugins.sh "$base_ref")
 if [[ ${#plugins[@]} -eq 0 ]]; then
   mapfile -t plugins < <(find plugins -mindepth 2 -maxdepth 2 -path '*/.tessl-plugin' -prune -print 2>/dev/null | sed 's#/.tessl-plugin$##' | sort)

@@ -309,5 +309,29 @@
         }
       }
     }
+  },
+  "verify": {
+    "groups": {
+      "plugin-collection": {
+        "path": "verifiers/*.json",
+        "level": "error",
+        "include": [
+          "tessl.json",
+          "plugins/*/evals/**"
+        ],
+        "verifiers": {
+          "tessl-manifest-agents": {
+            "include": [
+              "tessl.json"
+            ]
+          },
+          "plugin-evals-have-scenarios": {
+            "include": [
+              "plugins/*/evals/**"
+            ]
+          }
+        }
+      }
+    }
   }
 }
