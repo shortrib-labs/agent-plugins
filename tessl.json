@@ -1,6 +1,6 @@
 {
   "name": "shortrib-labs/agent-plugins",
-  "mode": "vendored",
+  "mode": "managed",
   "dependencies": {
     "shortrib-labs/plugin-collection-maintainer": {
       "source": "file:plugins/plugin-collection-maintainer"
@@ -13,6 +13,15 @@
     },
     "shortrib-labs/code-discipline": {
       "source": "file:plugins/code-discipline"
+    },
+    "tessl/skill-optimizer": {
+      "version": "0.16.0"
+    },
+    "tessl/tessl-verify": {
+      "version": "0.1.1"
+    },
+    "tessl/factory-setup": {
+      "version": "1.0.2"
     }
   },
   "agents": [

@@ -80,3 +80,7 @@ The recurring maintenance loop is the Tessl schedule in `tessl.json`, not a GitH
 - Schedule: weekly on Monday morning America/New_York
 
 The maintenance skill may open a focused PR, but it must not publish plugins. Publishing stays manual through `scripts/publish-plugins.sh` or the publish workflow.
+
+# Agent Rules <!-- tessl-managed -->
+
+@.tessl/RULES.md follow the [instructions](.tessl/RULES.md)
