@@ -22,12 +22,39 @@
     },
     "tessl/factory-setup": {
       "version": "1.0.2"
+    },
+    "shortrib-labs/taste": {
+      "source": "file:plugins/taste"
     }
   },
   "agents": [
     "claude-code",
     "tessl-agent"
   ],
+  "verify": {
+    "groups": {
+      "plugin-collection": {
+        "path": "verifiers/*.json",
+        "level": "error",
+        "include": [
+          "tessl.json",
+          "plugins/*/evals/**"
+        ],
+        "verifiers": {
+          "tessl-manifest-agents": {
+            "include": [
+              "tessl.json"
+            ]
+          },
+          "plugin-evals-have-scenarios": {
+            "include": [
+              "plugins/*/evals/**"
+            ]
+          }
+        }
+      }
+    }
+  },
   "actions": {
     "implement-ticket": {
       "tags": [
@@ -82,14 +109,6 @@
       "skill": "file:plugins/plugin-collection-maintainer#plugin-collection-maintenance",
       "environment": "factory",
       "agent": "claude-code"
-    }
-  },
-  "schedules": {
-    "plugin-collection-maintenance-weekly": {
-      "action": "plugin-collection-maintenance",
-      "cron": "0 9 * * 1",
-      "timezone": "America/New_York",
-      "description": "Weekly Tessl factory maintenance loop for the agent plugin collection"
     }
   },
   "triggers": {
@@ -310,28 +329,12 @@
       }
     }
   },
-  "verify": {
-    "groups": {
-      "plugin-collection": {
-        "path": "verifiers/*.json",
-        "level": "error",
-        "include": [
-          "tessl.json",
-          "plugins/*/evals/**"
-        ],
-        "verifiers": {
-          "tessl-manifest-agents": {
-            "include": [
-              "tessl.json"
-            ]
-          },
-          "plugin-evals-have-scenarios": {
-            "include": [
-              "plugins/*/evals/**"
-            ]
-          }
-        }
-      }
+  "schedules": {
+    "plugin-collection-maintenance-weekly": {
+      "action": "plugin-collection-maintenance",
+      "cron": "0 9 * * 1",
+      "timezone": "America/New_York",
+      "description": "Weekly Tessl factory maintenance loop for the agent plugin collection"
     }
   }
 }

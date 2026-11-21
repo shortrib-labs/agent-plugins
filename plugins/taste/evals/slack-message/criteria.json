@@ -1,0 +1,31 @@
+{
+  "context": "Tests whether the agent produces a Slack message with the point in the first line and no greeting or sign-off.",
+  "type": "weighted_checklist",
+  "checklist": [
+    {
+      "name": "Point in first line",
+      "description": "The first line states the change: the deploy freeze moves from Thursday to Wednesday starting next week.",
+      "max_score": 30
+    },
+    {
+      "name": "No greeting",
+      "description": "The message does not begin with a greeting such as Hi, Hey team, Hello everyone, or Good morning.",
+      "max_score": 20
+    },
+    {
+      "name": "No sign-off or filler closer",
+      "description": "The message has no sign-off, thanks, 'let me know if you have questions', or 'just wanted to'.",
+      "max_score": 20
+    },
+    {
+      "name": "Keeps the actionable facts",
+      "description": "It says Thursday releases move to Tuesday or need an exception from Lena Ortiz.",
+      "max_score": 15
+    },
+    {
+      "name": "Tight",
+      "description": "The message is short and scannable, a few lines at most, with no emoji and no bullets-heavy report.",
+      "max_score": 15
+    }
+  ]
+}

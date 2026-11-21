@@ -1,0 +1,36 @@
+{
+  "context": "Tests whether the agent writes a first-person narrative standup with an interesting opening and outcomes over activities, instead of echoing the bullets.",
+  "type": "weighted_checklist",
+  "checklist": [
+    {
+      "name": "First person",
+      "description": "The standup is written in first person (I, my).",
+      "max_score": 15
+    },
+    {
+      "name": "Prose paragraphs",
+      "description": "The output is narrative paragraphs with no bullet points or numbered lists.",
+      "max_score": 25
+    },
+    {
+      "name": "Opening is not chronological",
+      "description": "The first sentence does not start with 'Started the day', 'Yesterday I', or another flat chronological statement, and is not throat-clearing.",
+      "max_score": 20
+    },
+    {
+      "name": "Outcomes over activities",
+      "description": "The text leads with results such as the retry backoff fix shipped to production and CI going green, rather than listing meetings and tasks.",
+      "max_score": 20
+    },
+    {
+      "name": "Keeps specifics",
+      "description": "Concrete details survive: payments-api, the shared Postgres fixture, 28 of 31 Sentry errors, Dana and the Friday CSV deadline, Omar and the Kafka consumer lag dashboard.",
+      "max_score": 10
+    },
+    {
+      "name": "No emoji or filler",
+      "description": "No emoji, no greeting, and no closers like 'let me know if you have questions'.",
+      "max_score": 10
+    }
+  ]
+}

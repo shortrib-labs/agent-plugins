@@ -1,0 +1,46 @@
+{
+  "context": "Tests whether the agent strips padding from an AI-sounding update while keeping every fact and link intact.",
+  "type": "weighted_checklist",
+  "checklist": [
+    {
+      "name": "Cuts transitions",
+      "description": "The rewrite removes transition words such as Moreover, Additionally, Furthermore, and Nevertheless instead of swapping in synonyms.",
+      "max_score": 15
+    },
+    {
+      "name": "Replaces corporate verbs",
+      "description": "Corporate verbs such as leveraged, facilitate, utilized, optimize, strategizing are gone or replaced with plain verbs like use, help, build, plan.",
+      "max_score": 15
+    },
+    {
+      "name": "Removes hedges and filler openers",
+      "description": "Hedges such as various, numerous, a number of, and throat-clearing such as 'It's important to note' and 'I wanted to provide a comprehensive update' are removed.",
+      "max_score": 15
+    },
+    {
+      "name": "No emoji",
+      "description": "The output contains no emoji.",
+      "max_score": 10
+    },
+    {
+      "name": "Removes filler closer",
+      "description": "The closing lines 'Let me know if you have any questions', 'don't hesitate to reach out', and 'Hope this helps' are cut, not rephrased.",
+      "max_score": 15
+    },
+    {
+      "name": "Keeps all numbers and dates",
+      "description": "All figures survive unchanged: 14 services, 22 minutes, 9 minutes, March 14, 48-hour.",
+      "max_score": 10
+    },
+    {
+      "name": "Keeps names and links",
+      "description": "Priya Raman, Marcus Webb, the [[EKS]] wiki-link, and the https://wiki.example.com/redwood-runbook URL all appear unchanged.",
+      "max_score": 15
+    },
+    {
+      "name": "Keeps the writer's point",
+      "description": "The update still reports the migration progress, the build time win, and the database cutover risk without adding new claims.",
+      "max_score": 5
+    }
+  ]
+}
