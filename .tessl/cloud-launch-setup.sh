@@ -4,7 +4,8 @@
 # Sets up commit signing from the factory environment's GIT_SIGNING_KEY
 # secret, so factory runs can follow the rule that every commit is signed.
 # The key can be an SSH private key or an armored PGP private key, given
-# as-is, with literal \n escapes, or base64-encoded.
+# as-is, with literal \n escapes, with CRLF line endings, with its newlines
+# flattened to spaces, or base64-encoded.
 #
 # GitHub marks a commit verified only when the committer's email belongs to
 # the account that holds the key. Set GIT_SIGNING_NAME and GIT_SIGNING_EMAIL
@@ -23,9 +24,15 @@ key="$GIT_SIGNING_KEY"
 if [[ "$key" != *"-----BEGIN"* ]]; then
   key="$(printf '%s' "$key" | base64 -d 2>/dev/null || true)"
 fi
+key="${key//$'\r'/}"
 if [[ "$key" != *$'\n'* ]]; then
   key="$(printf '%b' "$key")"
 fi
+# Secret stores often flatten newlines to spaces; rebuild the lines.
+if [[ "$key" != *$'\n'* && "$key" =~ ^\ *(-----BEGIN\ [A-Z\ ]+-----)\ *(.*[^\ ])\ *(-----END\ [A-Z\ ]+-----)\ *$ ]]; then
+  key="${BASH_REMATCH[1]}"$'\n'"${BASH_REMATCH[2]// /$'\n'}"$'\n'"${BASH_REMATCH[3]}"
+fi
+key_lines="$(printf '%s\n' "$key" | wc -l | tr -d ' ')"
 
 case "$key" in
   *"-----BEGIN OPENSSH PRIVATE KEY-----"*)
@@ -33,7 +40,10 @@ case "$key" in
     install -d -m 700 "$HOME/.ssh"
     key_file="$HOME/.ssh/git_signing_key"
     (umask 077 && printf '%s\n' "$key" > "$key_file")
-    ssh-keygen -y -f "$key_file" > "$key_file.pub"
+    if ! ssh-keygen -y -f "$key_file" > "$key_file.pub"; then
+      echo "Could not load GIT_SIGNING_KEY ($key_lines lines after decoding)" >&2
+      exit 1
+    fi
     git config --global gpg.format ssh
     git config --global user.signingkey "$key_file"
     ;;
@@ -45,7 +55,7 @@ case "$key" in
     git config --global user.signingkey "$fingerprint"
     ;;
   *)
-    echo "GIT_SIGNING_KEY is neither an OpenSSH nor a PGP private key" >&2
+    echo "GIT_SIGNING_KEY is neither an OpenSSH nor a PGP private key ($key_lines lines after decoding)" >&2
     exit 1
     ;;
 esac
