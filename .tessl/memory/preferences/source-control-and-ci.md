@@ -60,6 +60,12 @@ Records the repo's non-LLM tools for enforcing broad invariants that should appl
 - **Missing deterministic guardrail gaps**: actionlint is not configured for GitHub workflow YAML; markdown lint is not configured for docs/skills.
 - **Recommended first tool to add**: actionlint for GitHub workflow validation after the first CI iteration.
 
+## Policy checks Tessl can't express
+
+- **Script**: `scripts/check_plugin_policy.py`, tested by `tests/test_check_plugin_policy.py`, run by `scripts/validate-plugins.sh` after the Tessl commands.
+- **Rules**: each `plugin.json` has a semver `version`, a `shortrib-labs/<kebab-case>` name, a one-line description of at least 20 characters, and `"private": true`; every `plugins/*` folder is a `file:plugins/<dir>` dependency in the Tessl manifest and every such dependency has a folder.
+- **Why it exists**: `tessl plugin lint` accepts all of these and `tessl change verify` skips `.tessl-plugin/`. Remove each rule once Tessl can enforce it.
+
 ## Tessl verify
 
 - **Configured**: yes.
