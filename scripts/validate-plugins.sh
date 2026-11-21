@@ -16,6 +16,16 @@ echo "::group::tessl change verify ${verify_args[*]}"
 tessl change verify "${verify_args[@]}"
 echo "::endgroup::"
 
+if [[ -d tests ]] && find tests -name 'test_*.py' -print -quit | grep -q .; then
+  echo "::group::python unit tests tests"
+  python3 -m unittest discover -s tests
+  echo "::endgroup::"
+fi
+
+echo "::group::check plugin policy"
+python3 scripts/check_plugin_policy.py
+echo "::endgroup::"
+
 mapfile -t plugins < <(scripts/changed-plugins.sh "$base_ref")
 if [[ ${#plugins[@]} -eq 0 ]]; then
   mapfile -t plugins < <(find plugins -mindepth 2 -maxdepth 2 -path '*/.tessl-plugin' -prune -print 2>/dev/null | sed 's#/.tessl-plugin$##' | sort)
