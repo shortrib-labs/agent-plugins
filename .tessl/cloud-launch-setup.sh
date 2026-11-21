@@ -32,7 +32,7 @@ fi
 if [[ "$key" != *$'\n'* && "$key" =~ ^\ *(-----BEGIN\ [A-Z\ ]+-----)\ *(.*[^\ ])\ *(-----END\ [A-Z\ ]+-----)\ *$ ]]; then
   key="${BASH_REMATCH[1]}"$'\n'"${BASH_REMATCH[2]// /$'\n'}"$'\n'"${BASH_REMATCH[3]}"
 fi
-echo "Key has $(printf '%s\n' "$key" | wc -l | tr -d ' ') lines"
+key_lines="$(printf '%s\n' "$key" | wc -l | tr -d ' ')"
 
 case "$key" in
   *"-----BEGIN OPENSSH PRIVATE KEY-----"*)
@@ -40,7 +40,10 @@ case "$key" in
     install -d -m 700 "$HOME/.ssh"
     key_file="$HOME/.ssh/git_signing_key"
     (umask 077 && printf '%s\n' "$key" > "$key_file")
-    ssh-keygen -y -f "$key_file" > "$key_file.pub"
+    if ! ssh-keygen -y -f "$key_file" > "$key_file.pub"; then
+      echo "Could not load GIT_SIGNING_KEY ($key_lines lines after decoding)" >&2
+      exit 1
+    fi
     git config --global gpg.format ssh
     git config --global user.signingkey "$key_file"
     ;;
@@ -52,7 +55,7 @@ case "$key" in
     git config --global user.signingkey "$fingerprint"
     ;;
   *)
-    echo "GIT_SIGNING_KEY is neither an OpenSSH nor a PGP private key" >&2
+    echo "GIT_SIGNING_KEY is neither an OpenSSH nor a PGP private key ($key_lines lines after decoding)" >&2
     exit 1
     ;;
 esac
