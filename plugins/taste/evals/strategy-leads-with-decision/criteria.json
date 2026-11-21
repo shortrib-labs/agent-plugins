@@ -1,0 +1,31 @@
+{
+  "context": "Tests whether the agent restructures a wandering strategy section to lead with the decision and to state at least one explicit no.",
+  "type": "weighted_checklist",
+  "checklist": [
+    {
+      "name": "Leads with the decision",
+      "description": "The first sentence or two state the decision: fund a six-person platform team in Q1 owning a single CI and deploy path.",
+      "max_score": 35
+    },
+    {
+      "name": "Names something it says no to",
+      "description": "The rewrite explicitly states at least one thing the strategy rejects, such as buying a vendor product, letting each team standardize on its own, or forcing language and framework choices.",
+      "max_score": 25
+    },
+    {
+      "name": "Background is cut down",
+      "description": "History about growth and the earlier reasonableness of the choices is shortened to what supports the decision, not kept as a lead-in.",
+      "max_score": 15
+    },
+    {
+      "name": "Keeps the facts",
+      "description": "Key figures remain: 40 to 310 engineers, six CI systems, four ways to deploy, about 30 percent of the week, six-person team, Q1 start, end of Q4 target.",
+      "max_score": 15
+    },
+    {
+      "name": "Strategist's voice",
+      "description": "The text reads as direct statements by a decision maker, with no hedging phrases such as 'a number of options' or 'after a lot of discussion', and no emoji.",
+      "max_score": 10
+    }
+  ]
+}

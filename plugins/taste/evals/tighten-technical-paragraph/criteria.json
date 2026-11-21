@@ -1,0 +1,31 @@
+{
+  "context": "Tests whether the agent removes adverbs and filler but preserves precise technical terms and every figure.",
+  "type": "weighted_checklist",
+  "checklist": [
+    {
+      "name": "Keeps technical terms",
+      "description": "Terms are preserved: Kafka consumers, offsets, idempotent upsert, Postgres 15, write-ahead-logged, rebalances, p99, consumer lag, partition count.",
+      "max_score": 25
+    },
+    {
+      "name": "Keeps every number",
+      "description": "All figures survive unchanged: 840 ms, 210 ms, 12,000 events per second, 1.8 million messages, 48 partitions.",
+      "max_score": 25
+    },
+    {
+      "name": "Removes adverbs",
+      "description": "Adverbs and intensifiers such as essentially, significantly, really, effectively, quite importantly, and fully are removed.",
+      "max_score": 20
+    },
+    {
+      "name": "Removes filler phrases",
+      "description": "Filler such as 'In practice' and 'which we were previously seeing' padding is cut, and the paragraph is shorter than the original.",
+      "max_score": 15
+    },
+    {
+      "name": "Does not simplify jargon",
+      "description": "The rewrite does not replace precise terms with lay explanations or drop the point that horizontal scaling is bounded by the fixed partition count.",
+      "max_score": 15
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "name": "shortrib-labs/taste",
+  "version": "1.1.0",
+  "description": "Editorial standards and writing taste — the canonical reference other plugins depend on.",
+  "private": true,
+  "author": {
+    "name": "Chuck Dries",
+    "url": "https://github.com/crdant"
+  },
+  "repository": "https://github.com/shortrib-labs/shortrib-claude-marketplace",
+  "skills": "./skills/"
+}
