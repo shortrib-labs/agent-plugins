@@ -1,0 +1,1 @@
+The pieces in `resources/` come from my weekly column. I want to be able to install a skill that writes in this voice for future columns. Build it in a `small-complaints/` folder, ready to drop into a skills directory.

@@ -1,0 +1,12 @@
+{
+  "name": "shortrib-labs/style",
+  "version": "1.0.0",
+  "description": "Analyzes writing samples to capture how someone writes as a voice skill; taste, by contrast, judges whether prose is good.",
+  "private": true,
+  "author": {
+    "name": "Chuck D'Antonio",
+    "url": "https://github.com/crdant"
+  },
+  "repository": "https://github.com/shortrib-labs/shortrib-claude-marketplace",
+  "skills": "./skills/"
+}

@@ -1,0 +1,51 @@
+{
+  "context": "Tests whether the agent captures a distinctive voice (short declarative sentences, second person, dry humor, a closing instruction, never a bulleted list) with quoted evidence, verbatim passages, varied anti-examples and the writer's absences.",
+  "type": "weighted_checklist",
+  "checklist": [
+    {
+      "name": "Names short declarative sentences with a quote",
+      "description": "The guide names short, declarative sentences as a habit and backs it with a quotation that appears in the samples, such as 'You fill it to the line.' or 'You do not honk.'",
+      "max_score": 10
+    },
+    {
+      "name": "Names second-person address with a quote",
+      "description": "The guide names direct address to the reader as 'you' as a habit and backs it with a quotation that appears in the samples.",
+      "max_score": 10
+    },
+    {
+      "name": "Names dry humor with a quote",
+      "description": "The guide names dry, deadpan or understated humor as a habit and backs it with a quotation that appears in the samples, such as 'Honking is for people who still believe in justice.'",
+      "max_score": 10
+    },
+    {
+      "name": "Notices no bulleted lists",
+      "description": "The guide states that the writer never uses bulleted or numbered lists in the pieces, and says what the writer does instead, such as short paragraphs of prose.",
+      "max_score": 10
+    },
+    {
+      "name": "Notices other absences",
+      "description": "The guide names at least one more thing the writer never does that the samples show, such as no jargon, no greeting or sign-off, no hedging, no exclamation marks, or no long subordinate clauses.",
+      "max_score": 10
+    },
+    {
+      "name": "Five representative passages",
+      "description": "The guide presents five representative passages, each with a note on what makes it characteristic.",
+      "max_score": 10
+    },
+    {
+      "name": "Passages are verbatim",
+      "description": "Every passage presented as representative appears word for word in the sample files. Paraphrased or invented passages presented as the writer's own score zero.",
+      "max_score": 15
+    },
+    {
+      "name": "Five anti-examples that break the voice differently",
+      "description": "The guide includes five written passages that deliberately break the voice, each breaking it in a different way (for example formal, bulleted, buzzword-heavy, warm and effusive, long-winded), and each has a stated reason it does not fit.",
+      "max_score": 15
+    },
+    {
+      "name": "Usable without the samples",
+      "description": "The guide includes dos and don'ts or quick reference rules specific enough that someone who has not read the samples could write in this voice.",
+      "max_score": 10
+    }
+  ]
+}

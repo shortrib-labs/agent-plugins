@@ -1,0 +1,1 @@
+Here's some of my old writing: four short pieces in the `resources/` folder. Can you figure out how I sound? I'm hoping to be able to hand whatever you come up with to someone else so they can write like me without ever seeing these. Save what you produce to `voice-guide.md`.
