@@ -1,0 +1,36 @@
+{
+  "context": "Tests whether the agent returns the full text as tracked changes (strikethrough for cuts, bold for additions) with surgical edits, a closing summary, and the file left alone.",
+  "type": "weighted_checklist",
+  "checklist": [
+    {
+      "name": "File unchanged",
+      "description": "note.md is byte-for-byte what it was at the start, and no edited copy was written to the workspace.",
+      "max_score": 25
+    },
+    {
+      "name": "Full text returned marked up",
+      "description": "The response reproduces the whole note in context with the changes marked, not a separate list of changes.",
+      "max_score": 20
+    },
+    {
+      "name": "Strikethrough for cuts",
+      "description": "Deleted words or phrases appear in markdown strikethrough (~~like this~~).",
+      "max_score": 15
+    },
+    {
+      "name": "Bold for additions",
+      "description": "Added or replacement words appear in bold.",
+      "max_score": 15
+    },
+    {
+      "name": "Surgical edits",
+      "description": "The edits are word and phrase level. The paragraph is not reordered, split into sections, or rewritten wholesale, and the March 3 date and the reconciliation job survive.",
+      "max_score": 15
+    },
+    {
+      "name": "Summary follows",
+      "description": "A brief summary after the marked-up text says what kinds of changes were made and why.",
+      "max_score": 10
+    }
+  ]
+}
