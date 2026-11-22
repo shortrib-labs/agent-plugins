@@ -25,6 +25,9 @@
     },
     "shortrib-labs/taste": {
       "source": "file:plugins/taste"
+    },
+    "shortrib-labs/style": {
+      "source": "file:plugins/style"
     }
   },
   "agents": [

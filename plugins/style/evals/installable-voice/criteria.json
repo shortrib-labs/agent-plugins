@@ -1,0 +1,41 @@
+{
+  "context": "Tests whether the agent produces an installable voice skill: valid frontmatter, a narrowly scoped description, and the passages and anti-examples placed in references files that SKILL.md links to.",
+  "type": "weighted_checklist",
+  "checklist": [
+    {
+      "name": "SKILL.md with valid frontmatter",
+      "description": "small-complaints/SKILL.md exists and begins with YAML frontmatter containing a lowercase hyphenated name field and a description field.",
+      "max_score": 15
+    },
+    {
+      "name": "Narrow description",
+      "description": "The description names the narrow context the voice is for, such as the humor column, its newspaper lifestyle section, or its general readers, and says when to use it. A description that would fire on any writing request scores zero.",
+      "max_score": 20
+    },
+    {
+      "name": "Characteristics and quick rules in SKILL.md",
+      "description": "SKILL.md itself holds the voice characteristics, each with evidence from the samples, and a short list of quick-reference dos and don'ts.",
+      "max_score": 15
+    },
+    {
+      "name": "Passages in a references file",
+      "description": "Representative passages from the samples are in one or more files under small-complaints/references/, not in SKILL.md.",
+      "max_score": 15
+    },
+    {
+      "name": "Anti-examples in a references file",
+      "description": "Anti-examples, written passages that break the voice with a reason for each, are in one or more files under small-complaints/references/, not in SKILL.md.",
+      "max_score": 15
+    },
+    {
+      "name": "SKILL.md links and says when to read",
+      "description": "SKILL.md links to each references file by relative path and says when to read it, for example before drafting or when checking a draft.",
+      "max_score": 15
+    },
+    {
+      "name": "Passages are verbatim",
+      "description": "The representative passages appear word for word in the sample files.",
+      "max_score": 5
+    }
+  ]
+}
