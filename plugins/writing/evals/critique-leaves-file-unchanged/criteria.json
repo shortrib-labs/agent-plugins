@@ -9,12 +9,12 @@
     },
     {
       "name": "Strongest passages quoted",
-      "description": "The feedback quotes at least one of the strong passages directly, such as the Dana migration opening or 'The timer lasted two weeks. The rule about calling time lasted.', and says why it works.",
+      "description": "The feedback in response.md quotes at least one of the strong passages directly, such as the Dana migration opening or 'The timer lasted two weeks. The rule about calling time lasted.', and says why it works.",
       "max_score": 20
     },
     {
       "name": "Problems located and explained",
-      "description": "The feedback names specific weak spots, such as the 'it is important to note' paragraph, the vague bulleted list, the emoji, or the generic conclusion, says where each is, and says why it fails.",
+      "description": "The feedback in response.md names specific weak spots, such as the 'it is important to note' paragraph, the vague bulleted list, the emoji, or the generic conclusion, says where each is, and says why it fails.",
       "max_score": 20
     },
     {
@@ -24,7 +24,7 @@
     },
     {
       "name": "Whole-piece assessment",
-      "description": "The feedback assesses the piece as a whole: whether the structure serves the point, how the opening and ending land, and whether it is the right length.",
+      "description": "The feedback in response.md assesses the piece as a whole: whether the structure serves the point, how the opening and ending land, and whether it is the right length.",
       "max_score": 15
     }
   ]

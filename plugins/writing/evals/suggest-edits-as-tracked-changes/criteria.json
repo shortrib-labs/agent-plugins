@@ -9,27 +9,27 @@
     },
     {
       "name": "Full text returned marked up",
-      "description": "The response reproduces the whole note in context with the changes marked, not a separate list of changes.",
+      "description": "response.md reproduces the whole note in context with the changes marked, not a separate list of changes.",
       "max_score": 20
     },
     {
       "name": "Strikethrough for cuts",
-      "description": "Deleted words or phrases appear in markdown strikethrough (~~like this~~).",
+      "description": "In response.md, deleted words or phrases appear in markdown strikethrough (~~like this~~).",
       "max_score": 15
     },
     {
       "name": "Bold for additions",
-      "description": "Added or replacement words appear in bold.",
+      "description": "In response.md, added or replacement words appear in bold.",
       "max_score": 15
     },
     {
       "name": "Surgical edits",
-      "description": "The edits are word and phrase level. The paragraph is not reordered, split into sections, or rewritten wholesale, and the March 3 date and the reconciliation job survive.",
+      "description": "The edits in response.md are word and phrase level. The paragraph is not reordered, split into sections, or rewritten wholesale, and the March 3 date and the reconciliation job survive.",
       "max_score": 15
     },
     {
       "name": "Summary follows",
-      "description": "A brief summary after the marked-up text says what kinds of changes were made and why.",
+      "description": "A brief summary in response.md after the marked-up text says what kinds of changes were made and why.",
       "max_score": 10
     }
   ]

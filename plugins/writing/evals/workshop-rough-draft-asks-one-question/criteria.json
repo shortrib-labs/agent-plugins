@@ -4,7 +4,7 @@
   "checklist": [
     {
       "name": "Exactly one question",
-      "description": "The response asks exactly one question to the writer. It is not a list of questions or a numbered set of options to answer.",
+      "description": "response.md asks exactly one question to the writer. It is not a list of questions or a numbered set of options to answer.",
       "max_score": 35
     },
     {
@@ -19,7 +19,7 @@
     },
     {
       "name": "Recognizes the stage",
-      "description": "The response shows it read the notes, for example by referring to specifics like the laptop wait, the on-call gap, or the unclear form of the piece.",
+      "description": "response.md shows it read the notes, for example by referring to specifics like the laptop wait, the on-call gap, or the unclear form of the piece.",
       "max_score": 10
     }
   ]
