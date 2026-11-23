@@ -1,0 +1,31 @@
+{
+  "context": "Tests whether the agent turns session notes into a short document that leads with the decision, states what it says no to, and keeps the strategist's own plain words.",
+  "type": "weighted_checklist",
+  "checklist": [
+    {
+      "name": "Leads with the decision",
+      "description": "strategy.md opens with what the team is doing, routing tickets by customer tier then age, before any background about team growth, response times or vendors.",
+      "max_score": 35
+    },
+    {
+      "name": "Names what it says no to",
+      "description": "strategy.md states at least one thing the strategy rejects, such as faster service for free-tier customers or buying AI triage this year.",
+      "max_score": 25
+    },
+    {
+      "name": "Strategist's own words",
+      "description": "strategy.md uses the plain language of the notes, such as 'we accept that' and 'we are not buying AI triage', and does not turn it into framework terms like 'guiding policy', 'coherent actions' or 'diagnosis', and has no emoji.",
+      "max_score": 20
+    },
+    {
+      "name": "Keeps owners and dates",
+      "description": "strategy.md keeps the actions with their owners and dates: tier routing by March 1 (Maria), six weeks of urgency tagging (Dev), and the April ops review.",
+      "max_score": 10
+    },
+    {
+      "name": "Includes the uncomfortable truth",
+      "description": "strategy.md states that there is no data on which tickets are urgent and tiers are a guess, instead of dropping it.",
+      "max_score": 10
+    }
+  ]
+}
