@@ -1,0 +1,31 @@
+{
+  "context": "Tests whether the agent notices that the governance in an otherwise sound draft is heavier than a 30-person team needs.",
+  "type": "weighted_checklist",
+  "checklist": [
+    {
+      "name": "Flags the process as too heavy",
+      "description": "response.md says the review board, sign-offs, written justifications, documentation gates or exception votes are more process than a team of about 30 needs.",
+      "max_score": 40
+    },
+    {
+      "name": "Ties it to team size",
+      "description": "response.md connects the concern to the team's headcount, for example by saying this is what a much larger company would run, or that it is overhead at this size.",
+      "max_score": 25
+    },
+    {
+      "name": "Points to a lighter alternative",
+      "description": "response.md suggests replacing the formal flow with something lighter, such as judgment by the owners, a short conversation, or a single reviewer, or asks the author what they would do without the Board.",
+      "max_score": 15
+    },
+    {
+      "name": "Does not rewrite the draft",
+      "description": "response.md does not contain a full rewritten strategy, and draft.md is unchanged.",
+      "max_score": 10
+    },
+    {
+      "name": "Recognizes what works",
+      "description": "response.md acknowledges something sound in the draft, such as the specific opening or the explicit nos, rather than rejecting all of it.",
+      "max_score": 10
+    }
+  ]
+}

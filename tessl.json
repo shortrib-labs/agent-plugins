@@ -28,6 +28,9 @@
     },
     "shortrib-labs/style": {
       "source": "file:plugins/style"
+    },
+    "shortrib-labs/strategy": {
+      "source": "file:plugins/strategy"
     }
   },
   "agents": [

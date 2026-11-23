@@ -1,0 +1,12 @@
+{
+  "name": "shortrib-labs/strategy",
+  "version": "1.1.0",
+  "description": "Socratic guide for crafting strategy in the Rumelt/Larson style. Install shortrib-labs/writing alongside it.",
+  "private": true,
+  "author": {
+    "name": "Chuck D'Antonio",
+    "url": "https://github.com/crdant"
+  },
+  "repository": "https://github.com/shortrib-labs/shortrib-claude-marketplace",
+  "skills": "./skills/"
+}

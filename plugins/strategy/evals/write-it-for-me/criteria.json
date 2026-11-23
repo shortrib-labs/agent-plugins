@@ -1,0 +1,26 @@
+{
+  "context": "Tests whether the agent responds to a thinly specified request to write a strategy by asking questions first, a couple at a time, instead of producing a document.",
+  "type": "weighted_checklist",
+  "checklist": [
+    {
+      "name": "Asks about existing documents",
+      "description": "response.md asks whether anyone has already written about or proposed something for this project, such as existing docs, proposals or prior discussions.",
+      "max_score": 25
+    },
+    {
+      "name": "Asks about the opportunity",
+      "description": "response.md asks what the opportunity is, who benefits, or why now, before any drafting.",
+      "max_score": 30
+    },
+    {
+      "name": "One or two questions only",
+      "description": "response.md asks no more than two questions to the user. A long list or numbered questionnaire scores zero.",
+      "max_score": 25
+    },
+    {
+      "name": "No strategy document",
+      "description": "response.md does not contain a drafted strategy: no headed sections for approach, actions, timeline or scope, and no invented details about the search project. A short note that the agent will draft later is fine.",
+      "max_score": 20
+    }
+  ]
+}
