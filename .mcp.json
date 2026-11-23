@@ -7,6 +7,18 @@
         "mcp",
         "start"
       ]
+    },
+    "todoist": {
+      "type": "http",
+      "url": "https://ai.todoist.net/mcp"
+    },
+    "displaybuddy": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "displaybuddy-mcp@3.2.2"
+      ]
     }
   }
 }

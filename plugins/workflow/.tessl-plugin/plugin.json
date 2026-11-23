@@ -1,0 +1,12 @@
+{
+  "name": "shortrib-labs/workflow",
+  "version": "2.0.0",
+  "description": "My ways of working, and the tools on my Mac that they depend on: the daily rituals and the habits around them, with Todoist as the source of today's tasks and Display Buddy for the display.",
+  "private": true,
+  "author": {
+    "name": "Chuck D'Antonio",
+    "url": "https://github.com/crdant"
+  },
+  "repository": "https://github.com/shortrib-labs/shortrib-claude-marketplace",
+  "mcpServers": "./.mcp.json"
+}
