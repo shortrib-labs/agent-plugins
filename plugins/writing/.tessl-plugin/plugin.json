@@ -1,0 +1,12 @@
+{
+  "name": "shortrib-labs/writing",
+  "version": "1.1.0",
+  "description": "Editorial standards for prose and the editing modes that apply them: edit rewrites a file in place, critique and suggest-edits give feedback without touching it, and workshop develops a rough draft over several turns.",
+  "private": true,
+  "author": {
+    "name": "Chuck D'Antonio",
+    "url": "https://github.com/crdant"
+  },
+  "repository": "https://github.com/shortrib-labs/shortrib-claude-marketplace",
+  "skills": "./skills/"
+}

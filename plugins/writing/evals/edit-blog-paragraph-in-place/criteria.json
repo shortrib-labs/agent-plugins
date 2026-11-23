@@ -1,0 +1,36 @@
+{
+  "context": "Tests whether the agent rewrites the draft file itself, cuts the padding, and keeps every fact, command, and link exactly.",
+  "type": "weighted_checklist",
+  "checklist": [
+    {
+      "name": "File edited in place",
+      "description": "post.md itself contains the rewritten paragraph. No copy such as post-HUMAN.md or post-edited.md holds the rewrite instead.",
+      "max_score": 25
+    },
+    {
+      "name": "Padding cut",
+      "description": "The rewrite drops the opening scene-setter, the 'excited to announce' and 'it's important to understand' framing, the 'whether you're a seasoned veteran' line, and the 'let us know' closer.",
+      "max_score": 25
+    },
+    {
+      "name": "AI vocabulary and constructs gone",
+      "description": "The rewrite does not use leverage, seamlessly, robust, unlock, dive into, or 'not just X, it's Y', and does not swap them for synonyms of the same kind.",
+      "max_score": 20
+    },
+    {
+      "name": "Version preserved",
+      "description": "The text still says version 2.4.1.",
+      "max_score": 10
+    },
+    {
+      "name": "Command preserved exactly",
+      "description": "The text still contains `acme install --cache=local` exactly as written.",
+      "max_score": 10
+    },
+    {
+      "name": "Link preserved exactly",
+      "description": "The text still contains https://docs.acme.example/cache/ exactly as written.",
+      "max_score": 10
+    }
+  ]
+}

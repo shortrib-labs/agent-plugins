@@ -1,0 +1,26 @@
+{
+  "context": "Tests whether the agent treats a rough brain dump as a first draft, asks exactly one question about intent or priority, and makes no edits yet.",
+  "type": "weighted_checklist",
+  "checklist": [
+    {
+      "name": "Exactly one question",
+      "description": "response.md asks exactly one question to the writer. It is not a list of questions or a numbered set of options to answer.",
+      "max_score": 35
+    },
+    {
+      "name": "Aimed at intent or priority",
+      "description": "The question asks what the piece is for, who it is for, or what the writer most wants to keep. It does not ask about style or formatting preferences.",
+      "max_score": 25
+    },
+    {
+      "name": "No edits yet",
+      "description": "notes.md is unchanged, and the response contains no rewritten version of the notes.",
+      "max_score": 30
+    },
+    {
+      "name": "Recognizes the stage",
+      "description": "response.md shows it read the notes, for example by referring to specifics like the laptop wait, the on-call gap, or the unclear form of the piece.",
+      "max_score": 10
+    }
+  ]
+}

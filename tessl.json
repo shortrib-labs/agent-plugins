@@ -23,8 +23,8 @@
     "tessl/factory-setup": {
       "version": "1.0.2"
     },
-    "shortrib-labs/taste": {
-      "source": "file:plugins/taste"
+    "shortrib-labs/writing": {
+      "source": "file:plugins/writing"
     },
     "shortrib-labs/style": {
       "source": "file:plugins/style"

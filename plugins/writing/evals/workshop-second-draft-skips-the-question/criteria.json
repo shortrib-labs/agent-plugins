@@ -1,0 +1,31 @@
+{
+  "context": "Tests whether the agent recognizes a second draft, skips the opening intent question, leads claims with the affirmative, and promotes or cuts mid-sentence asides while keeping the facts.",
+  "type": "weighted_checklist",
+  "checklist": [
+    {
+      "name": "No opening question",
+      "description": "The agent starts editing without first asking the writer what the piece is for or what to preserve, since the prompt already says.",
+      "max_score": 20
+    },
+    {
+      "name": "Leads with the affirmative",
+      "description": "The 'not just cost', 'not a rewrite, it's a configuration change', and 'isn't about adding process, it's about removing a failure' constructions are rewritten so each sentence states the positive claim directly, with no leftover 'not X, but Y' frame.",
+      "max_score": 25
+    },
+    {
+      "name": "Asides promoted or cut",
+      "description": "The parenthetical asides, such as '(push, SMS, and phone call)', '(no manual runbook step)', and '(and keeps ownership clear)', are no longer mid-sentence insertions. Each is either cut or turned into its own sentence or clause.",
+      "max_score": 25
+    },
+    {
+      "name": "Facts preserved",
+      "description": "The one-in-forty dropped notifications, the two Sev-1 incidents, the five-minute escalation, the Q3 date, and the ask for one owner per team are all still present.",
+      "max_score": 15
+    },
+    {
+      "name": "Summary of changes",
+      "description": "The agent ends with a short, honest summary of what changed and what should happen next.",
+      "max_score": 15
+    }
+  ]
+}
