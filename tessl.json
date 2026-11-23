@@ -31,6 +31,8 @@
     },
     "shortrib-labs/workflow": {
       "source": "file:plugins/workflow"
+    "shortrib-labs/strategy": {
+      "source": "file:plugins/strategy"
     }
   },
   "agents": [

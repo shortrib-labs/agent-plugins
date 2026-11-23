@@ -1,0 +1,26 @@
+{
+  "context": "Tests whether the agent names the problems in a draft that lists targets and aspirations, explains what a strategy would add, and leaves the draft unwritten.",
+  "type": "weighted_checklist",
+  "checklist": [
+    {
+      "name": "Names goals as strategy",
+      "description": "response.md says directly that the draft is a list of goals, targets or aspirations rather than a strategy.",
+      "max_score": 30
+    },
+    {
+      "name": "Names the missing tradeoffs",
+      "description": "response.md says the draft makes no tradeoffs: nothing in it is given up, and the commitments, such as supporting every team that asks, would not constrain any decision.",
+      "max_score": 25
+    },
+    {
+      "name": "Explains what a strategy adds",
+      "description": "response.md explains that a strategy would say how the goals will be reached and what the team gives up to reach them.",
+      "max_score": 25
+    },
+    {
+      "name": "Does not rewrite the draft",
+      "description": "response.md does not contain a rewritten or replacement strategy, and draft.md is unchanged. Questions back to the author or pointers on what to work out next are fine.",
+      "max_score": 20
+    }
+  ]
+}
