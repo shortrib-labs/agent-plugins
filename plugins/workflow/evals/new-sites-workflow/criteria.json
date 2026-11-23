@@ -1,0 +1,26 @@
+{
+  "context": "Tests whether the agent sets up the deploy workflow and branch plan for a new Quartz site from a template already in the workspace.",
+  "type": "weighted_checklist",
+  "checklist": [
+    {
+      "name": "Pages permissions",
+      "description": "The deploy workflow under quartz/.github/workflows/ grants pages: write and id-token: write permissions.",
+      "max_score": 25
+    },
+    {
+      "name": "Builds with npx quartz build",
+      "description": "The workflow builds the site with npx quartz build.",
+      "max_score": 25
+    },
+    {
+      "name": "Deploys from main",
+      "description": "The workflow triggers on pushes to main and deploys using the GitHub Pages deploy action.",
+      "max_score": 25
+    },
+    {
+      "name": "Plans an orphan main branch",
+      "description": "The agent plans to create main as an orphan branch so the template's git history is not carried over.",
+      "max_score": 25
+    }
+  ]
+}

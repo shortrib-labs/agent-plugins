@@ -1,0 +1,3 @@
+{
+  "description": "Tests whether the agent sets up the deploy workflow and branch plan for a new Quartz site from a template already in the workspace."
+}

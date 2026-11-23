@@ -1,0 +1,31 @@
+{
+  "context": "Tests whether the agent prepares Obsidian notes for an existing Quartz site by copying them into content and cleaning what would not work when published.",
+  "type": "weighted_checklist",
+  "checklist": [
+    {
+      "name": "Copies notes with structure kept",
+      "description": "The notes from vault/ are copied into site/content/ with their subdirectory structure intact, and the originals are not modified or removed.",
+      "max_score": 20
+    },
+    {
+      "name": "Removes the absolute path",
+      "description": "No published note under site/content/ still contains an absolute local path such as /Users/.",
+      "max_score": 20
+    },
+    {
+      "name": "Adds body link for frontmatter wiki-link",
+      "description": "The note whose frontmatter field holds a wiki-link now also links to that target in the page body, because frontmatter wiki-links are not rendered.",
+      "max_score": 20
+    },
+    {
+      "name": "Flags the missing-file reference",
+      "description": "The agent tells the user that a sentence points to a file that is not being published, naming the note and the missing file.",
+      "max_score": 20
+    },
+    {
+      "name": "Generates a titled index",
+      "description": "site/content/index.md exists, has a title in its frontmatter, and links to the included notes.",
+      "max_score": 20
+    }
+  ]
+}
