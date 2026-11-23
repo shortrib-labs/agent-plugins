@@ -1,15 +1,9 @@
 name: Plugin collection validation
 
 on:
+  # No paths filter: a required check that never starts stays pending forever,
+  # so the relevance check happens inside the job instead.
   pull_request:
-    paths:
-      - 'plugins/**'
-      - 'scripts/**'
-      - 'tessl.json'
-      - 'verifiers/**'
-      - '.github/workflows/plugin-validation.yml'
-      - 'AGENTS.md'
-      - 'README.md'
   push:
     branches: [main]
     paths:
@@ -17,6 +11,7 @@ on:
       - 'scripts/**'
       - 'tessl.json'
       - 'verifiers/**'
+      - 'tests/**'
       - '.github/workflows/plugin-validation.yml'
       - 'AGENTS.md'
       - 'README.md'
@@ -32,12 +27,30 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Check for relevant changes
+        id: changes
+        run: |
+          if [[ "${{ github.event_name }}" != "pull_request" ]]; then
+            echo "relevant=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          git fetch origin "${{ github.base_ref }}"
+          # Keep in sync with the push trigger's paths above.
+          if git diff --name-only "origin/${{ github.base_ref }}...HEAD" | grep -Eq '^(plugins/|scripts/|verifiers/|tests/|tessl\.json$|\.github/workflows/plugin-validation\.yml$|AGENTS\.md$|README\.md$)'; then
+            echo "relevant=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "relevant=false" >> "$GITHUB_OUTPUT"
+            echo "No validated paths changed; skipping validation."
+          fi
+
       - name: Install Tessl CLI
+        if: steps.changes.outputs.relevant == 'true'
         uses: tesslio/setup-tessl@v2
         with:
           token: ${{ secrets.TESSL_TOKEN }}
 
       - name: Validate plugin collection
+        if: steps.changes.outputs.relevant == 'true'
         run: |
           base_ref=""
           if [[ "${{ github.event_name }}" == "pull_request" ]]; then
