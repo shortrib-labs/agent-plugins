@@ -1,0 +1,21 @@
+{
+  "context": "Tests whether the agent builds the right icalpal query. icalpal only runs on macOS, so the agent records the command it would run and the rubric grades that command. Reads today's events in a form a script can parse.",
+  "type": "weighted_checklist",
+  "checklist": [
+    {
+      "name": "Uses the today command",
+      "description": "commands.md uses `icalpal eventsToday` (not `events` with a date range, and not `eventsToday+N`).",
+      "max_score": 40
+    },
+    {
+      "name": "Requests JSON output",
+      "description": "The command passes `-o json` (or `--output json`).",
+      "max_score": 40
+    },
+    {
+      "name": "Stays read-only and single-purpose",
+      "description": "commands.md contains an icalpal query only, with no attempt to create or modify events.",
+      "max_score": 20
+    }
+  ]
+}
