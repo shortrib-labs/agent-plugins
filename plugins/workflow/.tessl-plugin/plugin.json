@@ -1,7 +1,7 @@
 {
   "name": "shortrib-labs/workflow",
-  "version": "2.1.0",
-  "description": "My ways of working, and the tools on my Mac that they depend on: the daily rituals and the habits around them, with Todoist as the source of today's tasks and Display Buddy for the display.",
+  "version": "2.2.0",
+  "description": "My ways of working, and the tools on my Mac that they depend on: the daily rituals and the habits around them, with Todoist as the source of today's tasks, Superhuman for email and Display Buddy for the display.",
   "private": true,
   "author": {
     "name": "Chuck D'Antonio",

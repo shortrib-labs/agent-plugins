@@ -4,6 +4,10 @@
       "type": "http",
       "url": "https://ai.todoist.net/mcp"
     },
+    "superhuman": {
+      "type": "http",
+      "url": "https://mcp.mail.superhuman.com/mcp"
+    },
     "displaybuddy": {
       "command": "npx",
       "args": [
