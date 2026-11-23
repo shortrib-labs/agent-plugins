@@ -25,6 +25,9 @@
     },
     "shortrib-labs/writing": {
       "source": "file:plugins/writing"
+    },
+    "shortrib-labs/style": {
+      "source": "file:plugins/style"
     }
   },
   "agents": [
