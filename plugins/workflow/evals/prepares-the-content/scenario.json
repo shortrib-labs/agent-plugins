@@ -1,0 +1,3 @@
+{
+  "description": "Tests whether the agent prepares Obsidian notes for an existing Quartz site by copying them into content and cleaning what would not work when published."
+}
