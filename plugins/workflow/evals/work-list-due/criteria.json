@@ -1,0 +1,26 @@
+{
+  "context": "Tests whether the agent builds the right icalpal query. icalpal only runs on macOS, so the agent records the command it would run and the rubric grades that command. Filters tasks to one reminder list and sorts by due date.",
+  "type": "weighted_checklist",
+  "checklist": [
+    {
+      "name": "Queries tasks",
+      "description": "The command uses a task command such as `tasks`, `reminders` or `datedTasks`, not an event command.",
+      "max_score": 25
+    },
+    {
+      "name": "Filters to the Work list",
+      "description": "The command includes only the Work reminder list with `--il=Work` (or `--il Work`).",
+      "max_score": 35
+    },
+    {
+      "name": "Sorts by due date",
+      "description": "The command sorts by due date with `--std` or `--sort=due_date`.",
+      "max_score": 30
+    },
+    {
+      "name": "Requests JSON output",
+      "description": "The command passes `-o json`.",
+      "max_score": 10
+    }
+  ]
+}
