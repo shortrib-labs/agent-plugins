@@ -33,7 +33,7 @@ class Repo:
 
     def plugin(self, directory: str = "example", manifest: dict | None = None, listed: bool = True):
         path = self.root / "plugins" / directory / ".tessl-plugin"
-        path.mkdir(parents=True)
+        path.mkdir(parents=True, exist_ok=True)
         (path / "plugin.json").write_text(json.dumps(GOOD_MANIFEST if manifest is None else manifest))
         if listed:
             self.depend(directory)
@@ -154,6 +154,106 @@ class Listing(PolicyTest):
 
     def test_registry_dependency_is_ignored(self):
         self.repo.deps["tessl/factory"] = {"version": "1.0.1"}
+        self.assertEqual(self.repo.check(), [])
+
+
+class Mcp(PolicyTest):
+    def servers(self, **servers) -> tuple[list[str], list[str]]:
+        self.repo.plugin(manifest=self.manifest(mcpServers="./.mcp.json"))
+        plugin = self.repo.root / "plugins" / "example"
+        (plugin / ".mcp.json").write_text(json.dumps({"mcpServers": servers}))
+        (self.repo.root / "tessl.json").write_text(json.dumps({"dependencies": self.repo.deps}))
+        warnings: list[str] = []
+        return check_plugin_policy.check(self.repo.root, warnings), warnings
+
+    def npx(self, spec: str) -> dict:
+        return {"command": "npx", "args": ["-y", spec]}
+
+    def assertMcpRule(self, problems: list[str], rule: str, server: str = "srv"):
+        self.assertEqual(len(problems), 1, problems)
+        self.assertIn("plugins/example/.mcp.json", problems[0])
+        self.assertIn(f"server '{server}'", problems[0])
+        self.assertIn(f"rule {rule}", problems[0])
+
+    def test_https_url_passes(self):
+        problems, warnings = self.servers(srv={"type": "http", "url": "https://example.com/mcp"})
+        self.assertEqual((problems, warnings), ([], []))
+
+    def test_http_url_fails(self):
+        problems, _ = self.servers(srv={"type": "http", "url": "http://example.com/mcp"})
+        self.assertMcpRule(problems, "https")
+
+    def test_npx_exact_version_passes(self):
+        problems, warnings = self.servers(srv=self.npx("displaybuddy-mcp@3.2.2"))
+        self.assertEqual((problems, warnings), ([], []))
+
+    def test_scoped_exact_version_passes(self):
+        problems, _ = self.servers(srv=self.npx("@scope/name@1.2.3-rc.1"))
+        self.assertEqual(problems, [])
+
+    def test_npx_missing_version_fails(self):
+        problems, _ = self.servers(srv=self.npx("displaybuddy-mcp"))
+        self.assertMcpRule(problems, "pinned-version")
+
+    def test_npx_latest_tag_fails(self):
+        problems, _ = self.servers(srv=self.npx("displaybuddy-mcp@latest"))
+        self.assertMcpRule(problems, "pinned-version")
+
+    def test_npx_range_fails(self):
+        problems, _ = self.servers(srv=self.npx("displaybuddy-mcp@^3.2.2"))
+        self.assertMcpRule(problems, "pinned-version")
+
+    def test_scoped_without_version_fails(self):
+        problems, _ = self.servers(srv=self.npx("@scope/name"))
+        self.assertMcpRule(problems, "pinned-version")
+
+    def test_bunx_and_pnpm_dlx_are_checked(self):
+        problems, _ = self.servers(
+            a={"command": "bunx", "args": ["name@1.0.0"]},
+            b={"command": "pnpm", "args": ["dlx", "name@1.0.0"]},
+        )
+        self.assertEqual(problems, [])
+        problems, _ = self.servers(srv={"command": "pnpm", "args": ["dlx", "name"]})
+        self.assertMcpRule(problems, "pinned-version")
+
+    def test_uvx_pinned_passes(self):
+        problems, _ = self.servers(srv={"command": "uvx", "args": ["name==1.2.3"]})
+        self.assertEqual(problems, [])
+
+    def test_uvx_from_pinned_passes(self):
+        problems, _ = self.servers(srv={"command": "uvx", "args": ["--from", "name==1.2.3", "tool"]})
+        self.assertEqual(problems, [])
+
+    def test_uvx_unpinned_fails(self):
+        problems, _ = self.servers(srv={"command": "uvx", "args": ["name"]})
+        self.assertMcpRule(problems, "pinned-version")
+
+    def test_uvx_from_range_fails(self):
+        problems, _ = self.servers(srv={"command": "uvx", "args": ["--from", "name>=1.2", "tool"]})
+        self.assertMcpRule(problems, "pinned-version")
+
+    def test_pipx_run_is_checked(self):
+        problems, _ = self.servers(srv={"command": "pipx", "args": ["run", "name==1.0.0"]})
+        self.assertEqual(problems, [])
+        problems, _ = self.servers(srv={"command": "pipx", "args": ["run", "name"]})
+        self.assertMcpRule(problems, "pinned-version")
+
+    def test_unknown_command_warns_without_failing(self):
+        problems, warnings = self.servers(srv={"command": "/usr/local/bin/mine"})
+        self.assertEqual(problems, [])
+        self.assertEqual(len(warnings), 1, warnings)
+        self.assertIn("plugins/example/.mcp.json", warnings[0])
+        self.assertIn("server 'srv'", warnings[0])
+        self.assertIn("rule unknown-command", warnings[0])
+
+    def test_missing_config_file_fails(self):
+        self.repo.plugin(manifest=self.manifest(mcpServers="./.mcp.json"))
+        problems = self.repo.check()
+        self.assertEqual(len(problems), 1, problems)
+        self.assertIn("rule mcp-config", problems[0])
+
+    def test_plugin_without_mcp_servers_is_untouched(self):
+        self.repo.plugin()
         self.assertEqual(self.repo.check(), [])
 
 
