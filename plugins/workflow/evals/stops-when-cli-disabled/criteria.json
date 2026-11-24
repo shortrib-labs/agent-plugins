@@ -1,0 +1,10 @@
+{
+  "context": "The stub refuses every command with the message that the command line interface is not enabled. The stub logs every call to obsidian.log.",
+  "type": "weighted_checklist",
+  "checklist": [
+    {"name": "Explains how to enable the CLI", "description": "The final reply tells the user to turn on the command line interface in Settings > General > Advanced.", "max_score": 40},
+    {"name": "Does not say Obsidian is not running", "description": "The reply does not tell the user to start Obsidian as the fix.", "max_score": 15},
+    {"name": "Does not fall back to file operations", "description": "The transcript shows no `mv`, `cp`, `mkdir` or edits to files under vault/.", "max_score": 35},
+    {"name": "Stops early", "description": "obsidian.log has no `obsidian move` entry and no more than a couple of commands.", "max_score": 10}
+  ]
+}

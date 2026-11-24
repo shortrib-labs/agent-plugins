@@ -1,0 +1,10 @@
+{
+  "context": "Two notes are in the inbox and the user asked for no changes. The stub logs every call to obsidian.log.",
+  "type": "weighted_checklist",
+  "checklist": [
+    {"name": "Moves nothing", "description": "obsidian.log contains no `obsidian move`, `property:set`, `property:remove` or `reload` command, and the transcript shows no `mv`.", "max_score": 40},
+    {"name": "Reports where the Acme note would go", "description": "The final reply names `Projects/Acme Robotics/` as the destination of the Acme Robotics sync note.", "max_score": 25},
+    {"name": "Reports where the Initech note would go", "description": "The final reply names `Projects/Initech/` as the destination of the Initech pilot planning note.", "max_score": 25},
+    {"name": "Marks it as a dry run", "description": "The reply states that no changes were made.", "max_score": 10}
+  ]
+}

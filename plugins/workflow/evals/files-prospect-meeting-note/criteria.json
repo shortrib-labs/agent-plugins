@@ -1,0 +1,10 @@
+{
+  "context": "Obsidian is stubbed. The stub logs every call to obsidian.log in the working directory. Grade on the commands the agent ran, mainly the move destination.",
+  "type": "weighted_checklist",
+  "checklist": [
+    {"name": "Moves to the project folder", "description": "obsidian.log has an `obsidian move` for the Acme Robotics sync note whose destination is `Projects/Acme Robotics/`.", "max_score": 50},
+    {"name": "Moves through the CLI", "description": "The note is moved with `obsidian move`, and the transcript shows no `mv` or other direct file move inside the vault.", "max_score": 25},
+    {"name": "Does not touch other folders", "description": "No move targets Archive/, Daily/, Readwise/ or Templates/, and no other note is moved.", "max_score": 15},
+    {"name": "Reports the result", "description": "The final reply says where the note went.", "max_score": 10}
+  ]
+}
