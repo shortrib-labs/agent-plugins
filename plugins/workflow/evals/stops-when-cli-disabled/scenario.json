@@ -1,0 +1,3 @@
+{
+  "description": "Tests whether the agent stops and explains the fix when the Obsidian command line interface is off, instead of moving files itself."
+}

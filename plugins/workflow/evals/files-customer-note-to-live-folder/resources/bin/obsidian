@@ -1,0 +1,54 @@
+#!/usr/bin/env bash
+# Stub for the Obsidian CLI: answers read, list and search commands from the
+# fixture vault and appends every invocation to obsidian.log next to bin/.
+root="$(cd "$(dirname "$0")/.." && pwd)"
+vault="$root/vault"
+echo "obsidian $*" >> "$root/obsidian.log"
+
+if [[ -f "$root/.cli-disabled" ]]; then
+  echo "Command line interface is not enabled. Please turn it on in Settings > General > Advanced." >&2
+  exit 1
+fi
+
+cmd="${1:-}"; shift || true
+declare -A a
+for arg in "$@"; do
+  [[ "$arg" == *=* ]] && a["${arg%%=*}"]="${arg#*=}"
+done
+
+case "$cmd" in
+  vault)
+    echo "name	Notes"
+    echo "path	$vault"
+    ;;
+  folders)
+    (cd "$vault" && find . -mindepth 1 -type d | sed 's#^\./##' | sort)
+    ;;
+  files)
+    base="$vault"; [[ -n "${a[folder]:-}" ]] && base="$vault/${a[folder]}"
+    (cd "$vault" && find "${base#$vault/}" -type f -name "*.${a[ext]:-md}" 2>/dev/null | sed 's#^\./##' | sort)
+    ;;
+  read)
+    cat "$vault/${a[path]}"
+    ;;
+  links)
+    grep -o '\[\[[^]|#]*' "$vault/${a[path]}" | sed 's/^\[\[//' | sort -u | while read -r name; do
+      hit="$(cd "$vault" && find . -type f -name "$name.md" | sed 's#^\./##' | head -1)"
+      [[ -n "$hit" ]] && echo "$hit"
+    done
+    ;;
+  search)
+    (cd "$vault" && grep -rli --include='*.md' -- "${a[query]}" . | sed 's#^\./##' | head -"${a[limit]:-10}")
+    ;;
+  move)
+    dest="${a[to]}"
+    mkdir -p "$vault/$dest"
+    mv "$vault/${a[path]}" "$vault/$dest"
+    ;;
+  property:read|property:set|property:remove|reload)
+    ;;
+  *)
+    echo "stub obsidian: unsupported command '$cmd'" >&2
+    exit 2
+    ;;
+esac

@@ -1,0 +1,9 @@
+{
+  "context": "The Globex wiki-link resolves to an old note in the archive, but the customer has a live folder under the areas. The stub logs every call to obsidian.log.",
+  "type": "weighted_checklist",
+  "checklist": [
+    {"name": "Files into the live account folder", "description": "obsidian.log has an `obsidian move` for the Globex check-in note whose destination is `Areas/Field Engineering/Accounts/Globex/`.", "max_score": 60},
+    {"name": "Does not file into the archive", "description": "No `obsidian move` has a destination under `Archive/`.", "max_score": 25},
+    {"name": "Moves through the CLI", "description": "The move uses `obsidian move`, with no `mv` inside the vault.", "max_score": 15}
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "context": "Umbrella Labs has no folder anywhere in the vault. The stub logs every call to obsidian.log.",
+  "type": "weighted_checklist",
+  "checklist": [
+    {"name": "Files into a new project folder", "description": "obsidian.log has an `obsidian move` for the Umbrella Labs note with destination `Projects/Umbrella Labs/`.", "max_score": 60},
+    {"name": "Does not misfile it", "description": "The note is not moved into an existing customer, prospect or archive folder.", "max_score": 20},
+    {"name": "Creates the folder through the CLI", "description": "No `mkdir` or `mv` is run inside the vault; the folder comes into being through the move.", "max_score": 10},
+    {"name": "Reports the new folder", "description": "The final reply says a new folder was created or proposed for Umbrella Labs.", "max_score": 10}
+  ]
+}
